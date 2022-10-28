@@ -1,0 +1,22 @@
+{
+  "name": "chatbot-prova-conceito",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node --transpile-only index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.5.0",
+    "prisma": "^4.5.0",
+    "ts-node": "^10.9.1",
+    "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  }
+}

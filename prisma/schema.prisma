@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model clients {
+  id        String   @id @default(uuid())
+  client    String   @unique
+  stepsId   String
+  step      steps    @relation(fields: [stepsId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model steps {
+  id        String    @id @default(uuid())
+  name      String
+  isInitial Boolean   @default(false)
+  type      String
+  form      Json
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  clients   clients[]
+}
+
+enum types {
+  message
+  list
+  buttons
+  image
+  capture_data
+}
