@@ -17,15 +17,15 @@ instance.on("ready", () => {
 });
 instance.on("message", async (msg) => {
   if (msg.isStatus || msg.author) return;
-  let step = await prisma.steps.findFirst({
-    where: { isInitial: true },
-  });
-  if (!step) return;
+  console.log("atualizando");
+  let step;
+
   if (msg.type === "buttons_response") {
     const idNewStep = msg.selectedButtonId;
     await prisma.clients.update({
       where: { client: msg.from },
       data: { stepsId: idNewStep },
+      include: { step: true },
     });
   }
 
@@ -33,21 +33,31 @@ instance.on("message", async (msg) => {
     where: { client: msg.from },
     include: { step: true },
   });
+
   if (client) {
     step = client?.step;
+    if (!step) return;
+  } else {
+    step = await prisma.steps.findFirst({
+      where: { isInitial: true },
+    });
+    if (!step) return;
+    await prisma.clients.create({
+      data: { stepsId: step.id, client: msg.from },
+    });
   }
 
-  await msg.react("👍");
   if (step.type === "message") {
+    await msg.react("👍");
+
     //@ts-ignore
-    await instance.sendMessage(msg.from, step.form?.message);
+    return await instance.sendMessage(msg.from, step.form?.message);
   }
   if (step.type === "buttons") {
+    await msg.react("👍");
+
     //@ts-ignore
     const body = new Buttons(step.form?.message, step.form?.buttons);
-    await instance.sendMessage(msg.from, body);
+    return await instance.sendMessage(msg.from, body);
   }
-  await prisma.clients.create({
-    data: { stepsId: step?.id, client: msg.from },
-  });
 });
