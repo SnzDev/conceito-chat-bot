@@ -18,6 +18,11 @@ class InMemoryStepsRepository implements IStepsRepositories {
     this.steps.push(step);
     return step;
   }
+
+  async findAll(): Promise<Step[]> {
+    const step = this.steps;
+    return step;
+  }
 }
 
 export { InMemoryStepsRepository };

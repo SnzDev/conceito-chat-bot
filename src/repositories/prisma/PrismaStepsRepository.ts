@@ -14,6 +14,10 @@ class PrismaStepsRepository implements IStepsRepositories {
     });
     return step;
   }
+  async findAll(): Promise<Step[]> {
+    const step = await prisma.steps.findMany();
+    return step;
+  }
 }
 
 export { PrismaStepsRepository };
