@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { Buttons } from "whatsapp-web.js";
+import { Buttons, List } from "whatsapp-web.js";
 import { ModelInstance } from "./modelInstance";
+import { saveChatHistory } from "./src/utils/save-chat-history";
+import { SaveIfHaveFile } from "./src/utils/save-file";
 
 const prisma = new PrismaClient();
 const instance = ModelInstance("snz");
@@ -15,10 +17,31 @@ instance.on("loading_screen", (loading) => {
 instance.on("ready", () => {
   console.log("READY");
 });
-instance.on("message", async (msg) => {
-  if (msg.isStatus || msg.author) return;
+instance.on("message_create", async (msg) => {
+  if (msg.isStatus || msg.author || msg.fromMe) return;
   console.log("atualizando");
   let step;
+  await saveChatHistory(msg);
+  await SaveIfHaveFile(msg);
+  if (msg.body === "!lista") {
+    let sections = [
+      {
+        title: "Secton title",
+        rows: [
+          { title: "ListItem1", description: "desc" },
+          { title: "Try clicking me (id: test)", id: "test" },
+        ],
+      },
+    ];
+    const list = new List(
+      "Lista teste",
+      "btnText",
+      sections,
+      "titleTest",
+      "footerTest"
+    );
+    await instance.sendMessage(msg.from, list);
+  }
 
   if (msg.type === "buttons_response") {
     const idNewStep = msg.selectedButtonId;

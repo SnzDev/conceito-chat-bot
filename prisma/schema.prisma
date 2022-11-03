@@ -24,10 +24,40 @@ model steps {
   name      String
   isInitial Boolean   @default(false)
   type      String
-  form      Json
+  message   String
+  form      String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   clients   clients[]
+}
+
+model chat_history {
+  id                       String   @id @default(uuid())
+  messageId                String   @unique @map("message_id")
+  ack                      Int
+  hasMedia                 Boolean  @default(false) @map("has_media")
+  body                     String   @db.LongText
+  type                     String
+  timestamp                Int
+  from                     String
+  to                       String
+  author                   String?
+  deviceType               String?  @map("device_type")
+  isForwarded              Boolean  @default(false) @map("is_forwarded")
+  fromMe                   Boolean  @default(false) @map("from_me")
+  hasQuotedMsg             Boolean  @default(false) @map("has_quoted_msg")
+  isGif                    Boolean  @default(false) @map("is_gif")
+  isEphemeral              Boolean  @default(false) @map("is_ephemeral")
+  hasReaction              Boolean  @default(false) @map("has_reaction")
+  isDynamicReplyButtonsMsg Boolean  @default(false) @map("is_dynamic_reply_buttons_msg")
+  vCards                   String?  @map("v_cards")
+  mentionedIds             String?  @map("mentioned_ids")
+  links                    String?
+  location                 String?
+  quotedStanzaID           String?
+  quotedParticipant        String?
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
 }
 
 enum types {
