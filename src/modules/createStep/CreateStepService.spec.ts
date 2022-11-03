@@ -5,7 +5,7 @@ import { CreateStepService } from "./CreateStepService";
 import { IStepsRepositories } from "../../repositories/IStepsRepositories";
 import { fakeStep } from "../../utils/mockDataVitest";
 
-describe("Create step", () => {
+describe("Create Step Service", () => {
   let stepsRepository: IStepsRepositories;
   let createStep: CreateStepService;
 

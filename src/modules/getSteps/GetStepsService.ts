@@ -1,6 +1,6 @@
 import { IStepsRepositories } from "../../repositories/IStepsRepositories";
 
-class GetStepService {
+class GetStepsService {
   constructor(private prismaStepsRepository: IStepsRepositories) {}
   async execute() {
     const response = await this.prismaStepsRepository.findAll();
@@ -8,4 +8,4 @@ class GetStepService {
   }
 }
 
-export { GetStepService };
+export { GetStepsService };
