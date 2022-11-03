@@ -19,7 +19,7 @@ export const fakeStep = ({
         "LIST",
         "IMAGE",
         "VCARD",
-        "CONTACT",
+        "LINK",
       ]),
     message: message ?? faker.lorem.lines(2),
     form: form ?? JSON.stringify({}),
