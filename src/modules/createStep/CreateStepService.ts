@@ -2,13 +2,13 @@ import { Step } from "../../entities/Step";
 import { IStepsRepositories } from "../../repositories/IStepsRepositories";
 
 export class CreateStepService {
-  constructor(private prismaStepsRepository: IStepsRepositories) {}
+  constructor(private stepsRepository: IStepsRepositories) {}
 
   async execute({ name, type, message, form, isInitial }: Step) {
     if (!name || !type || !message || !form)
       throw new Error("Faltando parâmetros!");
     if (isInitial) {
-      const existsInitial = await this.prismaStepsRepository.existsInitial();
+      const existsInitial = await this.stepsRepository.existsInitial();
       if (existsInitial) throw new Error("Já existe um fluxo de inicio!");
     }
     const step = Step.create({
@@ -18,7 +18,7 @@ export class CreateStepService {
       name,
       type,
     });
-    const data = await this.prismaStepsRepository.create(step);
+    const data = await this.stepsRepository.create(step);
 
     return data;
   }

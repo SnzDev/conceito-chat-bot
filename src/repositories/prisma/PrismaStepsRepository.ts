@@ -32,6 +32,10 @@ class PrismaStepsRepository implements IStepsRepositories {
     });
     return step;
   }
+  async findById({ id }: Step): Promise<Step | null> {
+    const step = await prisma.steps.findUnique({ where: { id } });
+    return step;
+  }
 }
 
 export { PrismaStepsRepository };
