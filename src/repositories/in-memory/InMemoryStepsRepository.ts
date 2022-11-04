@@ -23,6 +23,11 @@ class InMemoryStepsRepository implements IStepsRepositories {
     const step = this.steps;
     return step;
   }
+
+  async update({ id, ...step }: Step): Promise<Step> {
+    const data = this.steps.findIndex((value) => value.id === id);
+    return (this.steps[data] = { ...this.steps[data], ...step });
+  }
 }
 
 export { InMemoryStepsRepository };

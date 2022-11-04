@@ -26,10 +26,10 @@ describe("Create Step Service", () => {
     await createStep.execute(fakeStep({ isInitial: true }));
     await expect(
       createStep.execute(fakeStep({ isInitial: true }))
-    ).rejects.toThrow("Já existe um fluxo de inicio!");
+    ).rejects.toThrowError("Já existe um fluxo de inicio!");
   });
 
-  it("should not be able to create when inputs are empty", async () => {
+  it("should not be able to create when some inputs are empty", async () => {
     const err = "Faltando parâmetros!";
     await expect(
       createStep.execute({ ...fakeStep({}), name: "" })

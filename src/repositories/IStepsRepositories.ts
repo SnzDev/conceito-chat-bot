@@ -4,5 +4,6 @@ interface IStepsRepositories {
   existsInitial(): Promise<boolean>;
   create({ name, isInitial, type, form, message }: Step): Promise<Step>;
   findAll(): Promise<Step[]>;
+  update({ id, name, isInitial, type, form, message }: Step): Promise<Step>;
 }
 export { IStepsRepositories };

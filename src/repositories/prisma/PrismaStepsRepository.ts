@@ -18,6 +18,20 @@ class PrismaStepsRepository implements IStepsRepositories {
     const step = await prisma.steps.findMany();
     return step;
   }
+  async update({
+    id,
+    name,
+    isInitial,
+    type,
+    form,
+    message,
+  }: Step): Promise<Step> {
+    const step = await prisma.steps.update({
+      where: { id },
+      data: { form, name, type, isInitial, message },
+    });
+    return step;
+  }
 }
 
 export { PrismaStepsRepository };
