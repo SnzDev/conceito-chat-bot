@@ -6,5 +6,6 @@ interface IStepsRepositories {
   findAll(): Promise<Step[]>;
   findById({ id }: Partial<Step>): Promise<Step | null>;
   update({ id, name, isInitial, type, form, message }: Step): Promise<Step>;
+  delete({ id }: Partial<Step>): Promise<void>;
 }
 export { IStepsRepositories };
