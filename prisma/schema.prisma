@@ -25,7 +25,7 @@ model steps {
   isInitial Boolean   @default(false)
   type      step_type
   message   String    @db.Text
-  form      String
+  form      String    @db.Text
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   clients   clients[]

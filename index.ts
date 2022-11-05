@@ -23,25 +23,25 @@ instance.on("message_create", async (msg) => {
   let step;
   await saveChatHistory(msg);
   await SaveIfHaveFile(msg);
-  if (msg.body === "!lista") {
-    let sections = [
-      {
-        title: "Secton title",
-        rows: [
-          { title: "ListItem1", description: "desc" },
-          { title: "Try clicking me (id: test)", id: "test" },
-        ],
-      },
-    ];
-    const list = new List(
-      "Lista teste",
-      "btnText",
-      sections,
-      "titleTest",
-      "footerTest"
-    );
-    await instance.sendMessage(msg.from, list);
-  }
+  // if (msg.body === "!lista") {
+  //   let sections = [
+  //     {
+  //       title: "Secton title",
+  //       rows: [
+  //         { title: "ListItem1", description: "desc" },
+  //         { title: "Try clicking me (id: test)", id: "test" },
+  //       ],
+  //     },
+  //   ];
+  //   const list = new List(
+  //     "Lista teste",
+  //     "btnText",
+  //     sections,
+  //     "titleTest",
+  //     "footerTest"
+  //   );
+  //   await instance.sendMessage(msg.from, list);
+  // }
 
   if (msg.type === "buttons_response") {
     const idNewStep = msg.selectedButtonId;
@@ -70,17 +70,28 @@ instance.on("message_create", async (msg) => {
     });
   }
 
-  if (step.type === "message") {
+  if (step.type === "MESSAGE") {
     await msg.react("👍");
 
     //@ts-ignore
-    return await instance.sendMessage(msg.from, step.form?.message);
+    return await instance.sendMessage(msg.from, step.message);
   }
-  if (step.type === "buttons") {
+  if (step.type === "BUTTONS") {
     await msg.react("👍");
-
+    const buttons = JSON.parse(step.form)?.map(
+      ({
+        buttonName,
+        buttonToStep,
+      }: {
+        buttonName: string;
+        buttonToStep: string;
+      }) => {
+        return { id: buttonToStep, body: buttonName };
+      }
+    );
+    if (!buttons) return;
     //@ts-ignore
-    const body = new Buttons(step.form?.message, step.form?.buttons);
+    const body = new Buttons(step.message, buttons);
     return await instance.sendMessage(msg.from, body);
   }
 });
