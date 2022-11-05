@@ -12,7 +12,7 @@ export class CreateStepService {
       if (existsInitial) throw new Error("Já existe um fluxo de inicio!");
     }
     const step = Step.create({
-      form,
+      form:JSON.stringify(form),
       isInitial,
       message,
       name,

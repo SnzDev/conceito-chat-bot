@@ -10,7 +10,7 @@ class UpdateStepService {
 
     const step = await this.stepsRepository.update({
       id,
-      form,
+      form: JSON.stringify(form),
       isInitial,
       message,
       name,

@@ -22,6 +22,6 @@ export const fakeStep = ({
         "LINK",
       ]),
     message: message ?? faker.lorem.lines(2),
-    form: form ?? JSON.stringify({}),
+    form: form ?? {},
   };
 };

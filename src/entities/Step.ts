@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 
 export class Step {
   id?: string;
@@ -6,7 +5,7 @@ export class Step {
   isInitial: boolean;
   type: string;
   message: string;
-  form: string;
+  form: string | object;
   createdAt?: Date;
   updatedAt?: Date;
 

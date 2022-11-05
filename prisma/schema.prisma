@@ -23,7 +23,7 @@ model steps {
   id        String    @id @default(uuid())
   name      String
   isInitial Boolean   @default(false)
-  type      String
+  type      step_type
   message   String    @db.Text
   form      String
   createdAt DateTime  @default(now())
@@ -60,10 +60,11 @@ model chat_history {
   updated_at               DateTime @updatedAt
 }
 
-enum types {
-  message
-  list
-  buttons
-  image
-  capture_data
+enum step_type {
+  MESSAGE
+  BUTTONS
+  LIST
+  IMAGE
+  VCARD
+  LINK
 }
