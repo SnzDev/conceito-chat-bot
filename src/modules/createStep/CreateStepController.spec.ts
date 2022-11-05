@@ -12,7 +12,7 @@ describe("Create Step Controller", () => {
   it("should create a new step", async () => {
     const response = await request(app).post("/steps").send(fakeStep({}));
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("id");
   });
 

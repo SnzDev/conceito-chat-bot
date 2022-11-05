@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createStepFactory } from "../modules/createStep/CreateStepFactory";
+import { DeleteStepFactory } from "../modules/deleteStep/DeleteStepFactory";
 import { getStepsFactory } from "../modules/getSteps/GetStepsFactory";
 import { UpdateStepFactory } from "../modules/updateStep/UpdateStepFactory";
 
@@ -16,4 +17,9 @@ routes.get("/steps", (request, response, next) =>
 routes.put("/steps/:id", (request, response, next) =>
   UpdateStepFactory().handle(request, response, next)
 );
+
+routes.delete("/steps/:id", (request, response, next) =>
+  DeleteStepFactory().handle(request, response, next)
+);
+
 export { routes };

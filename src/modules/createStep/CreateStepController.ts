@@ -15,7 +15,7 @@ export class CreateStepController {
         message,
         form,
       });
-      response.json(data);
+      response.status(201).json(data);
     } catch (e) {
       next(e);
     }
